@@ -16,6 +16,9 @@
 #include <util/delay.h>
 #include <avr/eeprom.h>
 
+#include <avr/wdt.h>
+
+
 uint16_t lastTimer1;
 uint16_t tick = 0;
 
@@ -69,6 +72,9 @@ void ResetTick(){
 }
 
 int main(void) {
+
+  MCUSR = 0;
+  wdt_disable();
 
   debugInit();
   _delay_ms(250); //be sure that W5100 has started (ATM starts in 65ms, W5100 150-200ms)
