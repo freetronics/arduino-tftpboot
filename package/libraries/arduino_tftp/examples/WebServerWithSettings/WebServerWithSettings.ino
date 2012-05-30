@@ -18,16 +18,45 @@
 #include <SPI.h>
 #include <Ethernet.h>
 
-// Enter a MAC address and IP address for your controller below.
-// The IP address will be dependent on your local network:
-byte mac[] = { 
-  0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
-IPAddress ip(192,168,1, 177);
+#include <EEPROM.h>
+
+// Enter a MAC address for your controller below--it must match the one the bootloader uses.
+byte mac[] = {0x12,0x34,0x45,0x78,0x9A,0xBC};
+
+// The IP address will be read from EEPROM or be set to a value default in `configureNetwork()`.
+IPAddress ip;
 
 // Initialize the Ethernet server library
 // with the IP address and port you want to use 
 // (port 80 is default for HTTP):
 EthernetServer server(80);
+
+void configureNetwork() {
+  // Reads IP address from EEPROM as stored by `WriteNetworkSettings` sketch.
+  
+#define EEPROM_SIG_1_VALUE 0x55
+#define EEPROM_SIG_2_VALUE 0xAA
+
+#define EEPROM_SIG_1_OFFSET 0
+#define EEPROM_SIG_2_OFFSET 1
+
+#define EEPROM_GATEWAY_OFFSET 3
+#define EEPROM_MASK_OFFSET 7
+#define EEPROM_MAC_OFFSET 11
+#define EEPROM_IP_OFFSET 17
+  
+  if ((EEPROM.read(EEPROM_SIG_1_OFFSET) == EEPROM_SIG_1_VALUE)
+       && (EEPROM.read(EEPROM_SIG_2_OFFSET) == EEPROM_SIG_2_VALUE)) {
+         ip = IPAddress(EEPROM.read(EEPROM_IP_OFFSET),
+                        EEPROM.read(EEPROM_IP_OFFSET+1),
+                        EEPROM.read(EEPROM_IP_OFFSET+2),
+                        EEPROM.read(EEPROM_IP_OFFSET+3));  
+       } else {
+         ip = IPAddress(192,168,1,1);
+       };
+       
+   // TODO: Handle MAC, mask & gateway also.    
+}
 
 void setup() {
  // Open serial communications and wait for port to open:
@@ -36,6 +65,7 @@ void setup() {
     ; // wait for serial port to connect. Needed for Leonardo only
   }
 
+  configureNetwork();
 
   // start the Ethernet connection and the server:
   Ethernet.begin(mac, ip);
