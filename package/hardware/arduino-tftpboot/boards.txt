@@ -1,0 +1,17 @@
+arduino-tftpboot.name = TFTP Bootloader ATmega328 (No Upload)
+
+arduino-tftpboot.build.mcu = atmega328p
+arduino-tftpboot.build.f_cpu = 16000000L
+arduino-tftpboot.build.core = arduino:arduino
+arduino-tftpboot.build.variant = arduino:standard
+
+arduino-tftpboot.upload.maximum_size = 28672
+
+arduino-tftpboot.bootloader.low_fuses=0xFF
+arduino-tftpboot.bootloader.high_fuses=0xD8
+arduino-tftpboot.bootloader.extended_fuses=0x05
+arduino-tftpboot.bootloader.path=arduino-tftpboot
+arduino-tftpboot.bootloader.file=arduino-tftpboot-bootloader-m328.hex
+#arduino-tftpboot.bootloader.unlock_bits=0x3F
+#arduino-tftpboot.bootloader.lock_bits=0x0F
+
