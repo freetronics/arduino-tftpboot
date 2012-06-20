@@ -8,7 +8,7 @@ arduino-tftpboot.build.variant = arduino:standard
 arduino-tftpboot.upload.maximum_size = 28672
 
 arduino-tftpboot.bootloader.low_fuses=0xFF
-arduino-tftpboot.bootloader.high_fuses=0xD8
+arduino-tftpboot.bootloader.high_fuses=0xD0
 arduino-tftpboot.bootloader.extended_fuses=0x05
 arduino-tftpboot.bootloader.path=arduino-tftpboot
 arduino-tftpboot.bootloader.file=arduino-tftpboot-bootloader-m328.hex
