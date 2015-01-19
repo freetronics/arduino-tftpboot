@@ -97,6 +97,11 @@ void loop() {
           client.println();
           client.println("<!DOCTYPE HTML>");
           client.println("<html>");
+          client.print("<a href=\"http://");
+          client.print(Ethernet.localIP());
+          client.print(":81\">Reset me @ http://");
+          client.print(Ethernet.localIP());
+          client.print(":81</a></p>");
                     // add a meta refresh tag, so the browser pulls again every 5 seconds:
           client.println("<meta http-equiv=\"refresh\" content=\"5\">");
           // output the value of each analog input pin
